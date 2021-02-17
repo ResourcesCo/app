@@ -8,7 +8,7 @@ import {
   highlightActiveLine,
   keymap,
 } from '@codemirror/view'
-import { EditorState, Extension, tagExtension } from '@codemirror/state'
+import { EditorState, tagExtension } from '@codemirror/state'
 import { history, historyKeymap } from '@codemirror/history'
 import { foldGutter, foldKeymap } from '@codemirror/fold'
 import {

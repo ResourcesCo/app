@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, Themed } from 'theme-ui'
+import { jsx, Themed, useColorMode } from 'theme-ui'
 import { createContext, useContext, useState, useEffect } from 'react'
 import NavBar from '../../components/nav/NavBar'
 
@@ -26,6 +26,10 @@ export const Title = ({ children }) => {
 
 const AppLayout = ({ initialTitle = 'Home', children }) => {
   const [title, setTitle] = useState(initialTitle)
+  const [_colorMode, setColorMode] = useColorMode()
+  useEffect(() => {
+    setColorMode('light')
+  })
   return (
     <LayoutContext.Provider value={{ title, setTitle }}>
       <Themed.root>

@@ -13,7 +13,6 @@ import Routes from 'src/Routes'
 
 import '@szhsin/react-menu/dist/index.css'
 import './index.css'
-import AppLayout from './layouts/AppLayout/AppLayout'
 
 netlifyIdentity.init()
 

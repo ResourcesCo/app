@@ -1,4 +1,4 @@
-import { future as preset } from '@theme-ui/presets'
+import { system as preset } from '@theme-ui/presets'
 
 export default {
   ...preset,

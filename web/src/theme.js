@@ -1,13 +1,13 @@
-import { system } from '@theme-ui/presets'
+import { future as preset } from '@theme-ui/presets'
 
 export default {
-  ...system,
+  ...preset,
   borders: {
-    ...system.borders,
+    ...preset.borders,
     divider: '1px solid #ccc',
   },
   messages: {
-    ...system.messages,
+    ...preset.messages,
     error: {
       bg: '#f8d7da',
       borderLeftColor: '#fa5252',

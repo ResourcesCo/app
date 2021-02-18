@@ -1,6 +1,8 @@
+import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 export const actions = () => {
+  requireAuth()
   return db.action.findMany()
 }
 

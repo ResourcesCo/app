@@ -1,5 +1,5 @@
 import { db } from 'src/lib/db'
-import { requireAuth, getCurrentUser } from 'src/lib/auth'
+import { requireAuth } from 'src/lib/auth'
 
 export const users = () => {
   requireAuth()
@@ -26,6 +26,7 @@ export const currentUser = async () => {
 }
 
 export const createCurrentUser = async ({ input }) => {
+  requireAuth()
   const authUser = context.currentUser
   const user = await db.user.create({
     data: {

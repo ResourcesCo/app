@@ -1,10 +1,10 @@
 import AppLayout from 'src/layouts/AppLayout'
 import ViewCell from 'src/components/ViewCell'
 
-const HomePage = () => {
+const HomePage = ({ path }) => {
   return (
     <AppLayout>
-      <ViewCell path={'home'} />
+      <ViewCell path={path} />
     </AppLayout>
   )
 }

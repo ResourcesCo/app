@@ -12,6 +12,7 @@ export const schema = gql`
 
   type Query {
     pages: [Page!]!
+    page(path: String!): Page
   }
 
   input CreatePageInput {

@@ -67,3 +67,9 @@ export const createPage = async ({ input: { title, body } }) => {
   })
   return page
 }
+
+export const page = async ({ path }) => {
+  requireAuth()
+  const page = db.page.findUnique({ where: { path } })
+  return page
+}

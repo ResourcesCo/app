@@ -205,7 +205,7 @@ const CodeEditor = ({
         p: 2,
         '&:focus-within': {
           borderColor: 'primary',
-          boxShadow: (t) => `0 0 0 2px ${t.colors.primary}`,
+          boxShadow: (t) => `0 0 0 2px ${t.colors?.primary}`,
           outline: 'none',
         },
       }}

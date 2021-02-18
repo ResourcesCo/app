@@ -7,7 +7,7 @@ export const standard = defineScenario({
       body: 'String',
       metadata: { foo: 'bar' },
       computed: { foo: 'bar' },
-      user: { create: { name: 'String', email: 'String4409120' } },
+      user: { create: { name: 'String', email: 'String4409120', bot: false } },
       page: {
         create: {
           name: 'String',
@@ -26,7 +26,7 @@ export const standard = defineScenario({
       body: 'String',
       metadata: { foo: 'bar' },
       computed: { foo: 'bar' },
-      user: { create: { name: 'String', email: 'String640660' } },
+      user: { create: { name: 'String', email: 'String640660', bot: false } },
       page: {
         create: {
           name: 'String',

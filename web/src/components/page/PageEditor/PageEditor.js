@@ -12,6 +12,7 @@ import {
 import { useRef } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { navigate } from '@redwoodjs/router'
+import { Title } from 'src/layouts/AppLayout'
 import CodeEditor from '../CodeEditor'
 
 const CREATE_PAGE_MUTATION = gql`
@@ -33,6 +34,7 @@ const PageEditor = () => {
   })
   return (
     <Container sx={{ maxWidth: 768, p: 2, pt: 4, mx: 'auto' }}>
+      <Title>New Page</Title>
       <CodeEditor
         language="markdown"
         showLineNumbers={false}

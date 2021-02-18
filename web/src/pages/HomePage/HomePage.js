@@ -1,10 +1,7 @@
 import AppLayout from '../../layouts/AppLayout'
 
 const HomePage = () => {
-  return (
-    <AppLayout>
-    </AppLayout>
-  )
+  return <AppLayout />
 }
 
 export default HomePage

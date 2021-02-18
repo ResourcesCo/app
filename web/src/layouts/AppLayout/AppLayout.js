@@ -1,16 +1,20 @@
 /** @jsx jsx */
 import { jsx, Themed } from 'theme-ui'
 import { createContext, useContext, useState, useEffect } from 'react'
-import { onlyText } from 'react-children-utilities'
 import NavBar from '../../components/nav/NavBar'
 
-const LayoutContext = createContext()
+const LayoutContext = createContext({
+  title: 'Home',
+  setTitle: () => undefined,
+})
 
 export const useLayout = () => useContext(LayoutContext)
 
 export const Title = ({ children }) => {
   const { title, setTitle } = useLayout()
-  const newTitle = onlyText(children)
+  const newTitle = React.Children.toArray(children)
+    .map((child) => child.toString())
+    .join('')
 
   useEffect(() => {
     if (newTitle !== title && typeof newTitle === 'string') {

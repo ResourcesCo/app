@@ -15,8 +15,7 @@ export const schema = gql`
   }
 
   input CreatePageInput {
-    name: String!
-    path: String!
+    title: String!
     body: String!
   }
 

@@ -1,5 +1,20 @@
+import { system } from '@theme-ui/presets'
+
 export default {
-  colors: {
+  ...system,
+  borders: {
+    ...system.borders,
+    divider: '1px solid #ccc',
+  },
+  messages: {
+    ...system.messages,
+    error: {
+      bg: '#f8d7da',
+      borderLeftColor: '#fa5252',
+      color: '#721c24',
+    },
+  },
+  /*colors: {
     text: '#000',
     background: '#fff',
     primary: '#33e',
@@ -71,9 +86,6 @@ export default {
       bg: 'muted',
     },
   },
-  borders: {
-    divider: '1px solid #ccc',
-  },
   styles: {
     root: {
       boxSizing: 'border-box',
@@ -141,5 +153,5 @@ export default {
       border: '1px solid #bbb',
       p: 1,
     },
-  },
+  },*/
 }

@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@redwoodjs/api": "^0.25.1"
+    "@redwoodjs/api": "^0.25.1",
+    "nanoid": "^3.1.20",
+    "slugify": "^1.4.6"
   }
 }

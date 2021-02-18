@@ -8,12 +8,14 @@ import {
   Box,
   Label,
   Checkbox,
+  Message,
 } from 'theme-ui'
 import { useRef } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { navigate } from '@redwoodjs/router'
 import { Title } from 'src/layouts/AppLayout'
-import CodeEditor from '../CodeEditor'
+import getMarkdownTitle from 'src/lib/getMarkdownTitle'
+import CodeEditor from 'src/components/page/CodeEditor'
 
 const CREATE_PAGE_MUTATION = gql`
   mutation CreatePageMutation($input: CreatePageInput!) {
@@ -27,14 +29,19 @@ const CREATE_PAGE_MUTATION = gql`
 
 const PageEditor = () => {
   const editorViewRef = useRef()
-  const [createPage, { loading }] = useMutation(CREATE_PAGE_MUTATION, {
+  const [createPage, { loading, error }] = useMutation(CREATE_PAGE_MUTATION, {
     onCompleted({ createPage: { path } }) {
-      navigate(path)
+      navigate(`/${path}`)
     },
   })
   return (
     <Container sx={{ maxWidth: 768, p: 2, pt: 4, mx: 'auto' }}>
       <Title>New Page</Title>
+      {error && (
+        <Message variant="error" sx={{ mb: 3 }}>
+          {error.message}
+        </Message>
+      )}
       <CodeEditor
         language="markdown"
         showLineNumbers={false}
@@ -44,17 +51,17 @@ const PageEditor = () => {
         <div sx={{ flexGrow: 1 }}>
           <Button
             mr={2}
-            onClick={() =>
+            onClick={() => {
+              const body = editorViewRef.current.state.doc.toString()
               createPage({
                 variables: {
                   input: {
-                    name: '/test',
-                    path: '/test',
-                    body: editorViewRef.current.state.doc.toString(),
+                    title: getMarkdownTitle(body) || 'Untitled',
+                    body,
                   },
                 },
               })
-            }
+            }}
           >
             Save
             {loading && (

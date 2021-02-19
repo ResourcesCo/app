@@ -1,10 +1,12 @@
 import AppLayout from 'src/layouts/AppLayout'
-import ViewCell from 'src/components/ViewCell'
+import ListCell from 'src/components/ListCell'
+import { useAuth } from '@redwoodjs/auth'
 
 const HomePage = () => {
+  const { isAuthenticated } = useAuth()
   return (
     <AppLayout>
-      <ViewCell path={'home'} />
+      {isAuthenticated && <ListCell />}
     </AppLayout>
   )
 }

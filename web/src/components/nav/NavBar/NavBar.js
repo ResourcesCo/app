@@ -18,14 +18,16 @@ const NavBar = () => {
   })
   return (
     <Flex sx={{ p: 1, alignItems: 'center', borderBottom: 'divider' }}>
-      <IconButton variant="ghost" px={1}>
-        <GiHamburgerMenu />
-      </IconButton>
+      <Link to={routes.home()}>
+        <IconButton variant="ghost" sx={{ color: 'text'}}>
+          <GiHamburgerMenu />
+        </IconButton>
+      </Link>
       <Box sx={{ flexGrow: 1 }}>
         <Heading sx={{ fontSize: 3, fontWeight: 500, mx: 1 }}>{title}</Heading>
       </Box>
       <Link to={routes.new()}>
-        <IconButton>
+        <IconButton sx={{ color: 'text' }}>
           <BsFilePlus />
         </IconButton>
       </Link>
@@ -35,22 +37,22 @@ const NavBar = () => {
       {isAuthenticated ? (
         <AvatarMenu />
       ) : (
-        <>
-          <Button
-            onClick={logIn}
-            sx={{ display: ['none', 'block', 'block'] }}
-            sx={{ fontSize: 1, mx: 1, py: 1 }}
-          >
-            Sign In
+          <>
+            <Button
+              onClick={logIn}
+              sx={{ display: ['none', 'block', 'block'] }}
+              sx={{ fontSize: 1, mx: 1, py: 1 }}
+            >
+              Sign In
           </Button>
-          <IconButton
-            onClick={logIn}
-            sx={{ display: ['block', 'none', 'none'] }}
-          >
-            <BsPerson />
-          </IconButton>
-        </>
-      )}
+            <IconButton
+              onClick={logIn}
+              sx={{ display: ['block', 'none', 'none'] }}
+            >
+              <BsPerson />
+            </IconButton>
+          </>
+        )}
       <IconButton>
         <BsThreeDots />
       </IconButton>

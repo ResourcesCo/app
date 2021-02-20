@@ -18,16 +18,21 @@ netlifyIdentity.init()
 
 const refresh = async () => {
   try {
-    await netlifyIdentity.refresh()
+    if (netlifyIdentity.gotrue && netlifyIdentity.gotrue.currentUser()) {
+      await netlifyIdentity.refresh()
+    }
   } catch (e) {
     console.warn('Error refreshing token', e)
   }
 }
 
 if (typeof window !== 'undefined') {
-  window.addEventListener('focus', refresh)
+  window.addEventListener('focus', () => {
+    setTimeout(refresh, 100)
+  })
 }
 
+setTimeout(refresh, 100)
 setInterval(refresh, 30 * 60 * 1000)
 
 ReactDOM.render(

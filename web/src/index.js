@@ -16,6 +16,20 @@ import './index.css'
 
 netlifyIdentity.init()
 
+const refresh = async () => {
+  try {
+    await netlifyIdentity.refresh()
+  } catch (e) {
+    console.warn('Error refreshing token', e)
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('focus', refresh)
+}
+
+setInterval(refresh, 30 * 60 * 1000)
+
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>
     <AuthProvider client={netlifyIdentity} type="netlify">

@@ -18,6 +18,12 @@ export const createPage = async (
   { context: { currentUser } }
 ) => {
   requireAuth()
+  if (!currentUser.sub) {
+    console.log(
+      'Made it past requireAuth with no currentUser subject. currentUser:',
+      currentUser
+    )
+  }
   let user = await db.user.findUnique({
     where: { authId: currentUser.sub },
   })

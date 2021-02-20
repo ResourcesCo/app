@@ -1,12 +1,10 @@
+import { useAuth } from '@redwoodjs/auth'
 import PageEditor from '../../components/page/PageEditor/PageEditor'
-import AppLayout, { Title } from '../../layouts/AppLayout'
+import AppLayout from '../../layouts/AppLayout'
 
 const NewPage = () => {
-  return (
-    <AppLayout>
-      <PageEditor />
-    </AppLayout>
-  )
+  const { isAuthenticated } = useAuth()
+  return <AppLayout>{isAuthenticated && <PageEditor />}</AppLayout>
 }
 
 export default NewPage

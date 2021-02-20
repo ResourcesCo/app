@@ -13,15 +13,32 @@ export const Page = {
     db.page.findUnique({ where: { id: root.id } }).actions(),
 }
 
-export const createPage = async ({ input: { title, body } }) => {
+export const createPage = async (
+  { input: { title, body } },
+  { context: { currentUser } }
+) => {
   requireAuth()
-  const authUser = context.currentUser
-  let user = await db.user.findUnique({ where: { email: authUser.email } })
+  let user = await db.user.findUnique({
+    where: { authId: currentUser.sub },
+  })
+  if (!user) {
+    user = await db.user.findFirst({
+      where: { email: currentUser.email, authProvider: 'unknown' },
+    })
+    const userUpdate = {
+      authId: currentUser.sub,
+      authProvider: 'netlify-identity',
+    }
+    await db.user.update({ where: { id: user.id }, data: userUpdate })
+    user = { ...user, ...userUpdate }
+  }
   if (!user) {
     user = await db.user.create({
       data: {
-        name: authUser.email,
-        email: authUser.email,
+        name: currentUser.email,
+        authId: currentUser.sub,
+        authProvider: 'netlify-identity',
+        email: currentUser.email || currentUser.sub,
         bot: false,
       },
     })

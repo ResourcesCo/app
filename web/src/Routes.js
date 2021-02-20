@@ -14,9 +14,9 @@ import NewPage from 'src/pages/NewPage'
 const Routes = () => {
   return (
     <Router>
-      <Route path="/edit" page={EditPage} name="edit" />
       <Route path="/" page={HomePage} name="home" />
       <Route path="/{path}" page={ViewPage} name="view" />
+      <Route path="/{path}/-/edit" page={EditPage} name="edit" />
       <Route path="/-/new" page={NewPage} name="new" />
       <Route notfound page={NotFoundPage} />
     </Router>

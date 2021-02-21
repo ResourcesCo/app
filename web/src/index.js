@@ -2,6 +2,7 @@
 import { jsx, ThemeProvider } from 'theme-ui'
 import { AuthProvider } from '@redwoodjs/auth'
 import netlifyIdentity from 'netlify-identity-widget'
+import { netlify as netlifyClient } from '@redwoodjs/auth/dist/authClients/netlify'
 import ReactDOM from 'react-dom'
 
 import { FatalErrorBoundary } from '@redwoodjs/web'
@@ -16,24 +17,14 @@ import './index.css'
 
 netlifyIdentity.init()
 
-const refresh = async () => {
-  try {
-    if (netlifyIdentity.gotrue && netlifyIdentity.gotrue.currentUser()) {
-      await netlifyIdentity.refresh()
-    }
-  } catch (e) {
-    console.warn('Error refreshing token', e)
+// Monkey-patch netlifyClient to refresh the token
+netlifyClient.getToken = async () => {
+  const getJwt = netlifyIdentity.currentUser()?.jwt
+  if (getJwt) {
+    const jwt = await getJwt()
+    return jwt || null
   }
 }
-
-if (typeof window !== 'undefined') {
-  window.addEventListener('focus', () => {
-    setTimeout(refresh, 100)
-  })
-}
-
-setTimeout(refresh, 100)
-setInterval(refresh, 30 * 60 * 1000)
 
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>

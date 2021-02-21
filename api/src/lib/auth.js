@@ -98,7 +98,7 @@ import { AuthenticationError, ForbiddenError, parseJWT } from '@redwoodjs/api'
  * }
  */
 export const getCurrentUser = async (decoded, { _token, _type }) => {
-  if (decoded.sub) {
+  if (typeof decoded.sub === 'string') {
     return { ...decoded, roles: parseJWT({ decoded }).roles }
   }
 }

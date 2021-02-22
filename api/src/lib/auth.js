@@ -56,7 +56,6 @@
 // together with a collection of roles to check for role assignment:
 
 import { AuthenticationError, ForbiddenError, parseJWT } from '@redwoodjs/api'
-import jwt from 'jsonwebtoken'
 
 /**
  * Use requireAuth in your services to check that a user is logged in,
@@ -99,7 +98,6 @@ import jwt from 'jsonwebtoken'
  * }
  */
 export const getCurrentUser = async (decoded, context) => {
-  const { _token, _type } = context
   let result = { ...decoded }
   if (typeof decoded?.sub !== 'string') {
     console.error(

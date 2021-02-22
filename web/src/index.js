@@ -2,7 +2,6 @@
 import { jsx, ThemeProvider } from 'theme-ui'
 import { AuthProvider } from '@redwoodjs/auth'
 import netlifyIdentity from 'netlify-identity-widget'
-import { netlify as netlifyClient } from '@redwoodjs/auth/dist/authClients/netlify'
 import ReactDOM from 'react-dom'
 
 import { FatalErrorBoundary } from '@redwoodjs/web'
@@ -17,18 +16,24 @@ import './index.css'
 
 netlifyIdentity.init()
 
-// Monkey-patch netlifyClient to refresh the token
-netlifyClient.getToken = async () => {
-  const getJwt = netlifyIdentity.currentUser()?.jwt
-  if (getJwt) {
-    const jwt = await getJwt()
-    return jwt || null
+const currentUser = async () => {
+  const currentUser = netlifyIdentity.currentUser()
+  if (typeof currentUser?.jwt === 'function') {
+    console.log('awaiting currentUser.jwt() before returning currentUser')
+    await currentUser.jwt()
   }
+  return currentUser
 }
+
+const netlifyIdentityWrapped = new Proxy(netlifyIdentity, {
+  get(target, name) {
+    return name === 'currentUser' ? currentUser : target[name]
+  },
+})
 
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>
-    <AuthProvider client={netlifyIdentity} type="netlify">
+    <AuthProvider client={netlifyIdentityWrapped} type="netlify">
       <RedwoodApolloProvider>
         <ThemeProvider theme={theme}>
           <Routes />

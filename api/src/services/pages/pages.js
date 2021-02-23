@@ -13,11 +13,7 @@ export const Page = {
     db.page.findUnique({ where: { id: root.id } }).actions(),
 }
 
-export const createPage = async (
-  { input: { title, body } },
-  { context: { currentUser } }
-) => {
-  requireAuth()
+const getUser = async (currentUser) => {
   if (!currentUser.sub) {
     console.log(
       'Made it past requireAuth with no currentUser subject. currentUser:',
@@ -49,6 +45,15 @@ export const createPage = async (
       },
     })
   }
+  return user
+}
+
+export const createPage = async (
+  { input: { title, body } },
+  { context: { currentUser } }
+) => {
+  requireAuth()
+  const user = await getUser(currentUser)
 
   const pageProps = {
     name: title,
@@ -86,6 +91,39 @@ export const createPage = async (
       ...pageProps,
       path,
       type: 'create',
+    },
+  })
+  return page
+}
+
+export const editPage = async (
+  { input: { path, title, body } },
+  { context: { currentUser } }
+) => {
+  requireAuth()
+  const user = await getUser(currentUser)
+
+  const pageProps = {
+    name: title,
+    body,
+    metadata: {},
+    computed: {},
+  }
+
+  let page
+  page = await db.page.update({
+    where: { path },
+    data: {
+      ...pageProps,
+    },
+  })
+  await db.action.create({
+    data: {
+      userId: user.id,
+      pageId: page.id,
+      ...pageProps,
+      path,
+      type: 'edit',
     },
   })
   return page

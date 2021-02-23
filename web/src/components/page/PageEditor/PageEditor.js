@@ -27,10 +27,24 @@ const CREATE_PAGE_MUTATION = gql`
   }
 `
 
-const PageEditor = () => {
+const EDIT_PAGE_MUTATION = gql`
+  mutation EditPageMutation($input: EditPageInput!) {
+    editPage(input: $input) {
+      id
+      name
+      path
+    }
+  }
+`
+
+const PageEditor = ({ path, body }) => {
+  const editing = path !== undefined
+  const mutation = editing ? EDIT_PAGE_MUTATION : CREATE_PAGE_MUTATION
+  const mutationPageKey = editing ? 'editPage' : 'createPage'
+
   const editorViewRef = useRef()
-  const [createPage, { loading, error }] = useMutation(CREATE_PAGE_MUTATION, {
-    onCompleted({ createPage: { path } }) {
+  const [mutate, { loading, error }] = useMutation(mutation, {
+    onCompleted({ [mutationPageKey]: { path } }) {
       navigate(`/${path}`)
     },
   })
@@ -46,6 +60,7 @@ const PageEditor = () => {
         language="markdown"
         showLineNumbers={false}
         editorViewRef={editorViewRef}
+        initialValue={body || ''}
       />
       <Flex sx={{ my: 3 }}>
         <div sx={{ flexGrow: 1 }}>
@@ -53,9 +68,10 @@ const PageEditor = () => {
             mr={2}
             onClick={() => {
               const body = editorViewRef.current.state.doc.toString()
-              createPage({
+              mutate({
                 variables: {
                   input: {
+                    ...(editing ? { path } : {}),
                     title: getMarkdownTitle(body) || 'Untitled',
                     body,
                   },

@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import { jsx, Flex, Box, IconButton, Button, Heading } from 'theme-ui'
 import { useEffect } from 'react'
-import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import { BsBell, BsFilePlus, BsPerson, BsThreeDots } from 'react-icons/bs'
+import { BsFilePlus } from 'react-icons/bs'
 import { useLayout } from 'src/layouts/AppLayout'
 import AvatarMenu from '../AvatarMenu'
+import PageMenu from '../PageMenu'
 
-const NavBar = () => {
-  const { logIn, isAuthenticated } = useAuth()
+const NavBar = ({ pageMenuItems }) => {
   const { title } = useLayout()
   useEffect(() => {
     if (typeof window !== undefined && typeof title === 'string') {
@@ -19,7 +18,7 @@ const NavBar = () => {
   return (
     <Flex sx={{ p: 1, alignItems: 'center', borderBottom: 'divider' }}>
       <Link to={routes.home()}>
-        <IconButton variant="ghost" sx={{ color: 'text'}}>
+        <IconButton variant="ghost" sx={{ color: 'text' }}>
           <GiHamburgerMenu />
         </IconButton>
       </Link>
@@ -31,31 +30,11 @@ const NavBar = () => {
           <BsFilePlus />
         </IconButton>
       </Link>
-      <IconButton>
+      {/* <IconButton>
         <BsBell />
-      </IconButton>
-      {isAuthenticated ? (
-        <AvatarMenu />
-      ) : (
-          <>
-            <Button
-              onClick={logIn}
-              sx={{ display: ['none', 'block', 'block'] }}
-              sx={{ fontSize: 1, mx: 1, py: 1 }}
-            >
-              Sign In
-          </Button>
-            <IconButton
-              onClick={logIn}
-              sx={{ display: ['block', 'none', 'none'] }}
-            >
-              <BsPerson />
-            </IconButton>
-          </>
-        )}
-      <IconButton>
-        <BsThreeDots />
-      </IconButton>
+      </IconButton> */}
+      <AvatarMenu />
+      <PageMenu pageMenuItems={pageMenuItems} />
     </Flex>
   )
 }

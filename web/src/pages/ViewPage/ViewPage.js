@@ -1,10 +1,21 @@
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
 import { useAuth } from '@redwoodjs/auth'
 import AppLayout from 'src/layouts/AppLayout'
 import ViewCell from 'src/components/ViewCell'
+import { MenuItem } from '@szhsin/react-menu'
+import { navigate, routes } from '@redwoodjs/router'
 
-const HomePage = ({ path }) => {
+const ViewPage = ({ path }) => {
   const { isAuthenticated } = useAuth()
-  return <AppLayout>{isAuthenticated && <ViewCell path={path} />}</AppLayout>
+  const pageMenuItems = (
+    <MenuItem onClick={() => navigate(routes.edit({ path }))}>Edit</MenuItem>
+  )
+  return (
+    <AppLayout pageMenuItems={pageMenuItems}>
+      {isAuthenticated && <ViewCell path={path} />}
+    </AppLayout>
+  )
 }
 
-export default HomePage
+export default ViewPage

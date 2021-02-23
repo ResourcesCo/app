@@ -24,7 +24,7 @@ export const Title = ({ children }) => {
   return null
 }
 
-const AppLayout = ({ initialTitle = 'Home', children }) => {
+const AppLayout = ({ initialTitle = 'Home', pageMenuItems, children }) => {
   const [title, setTitle] = useState(initialTitle)
   const [_colorMode, setColorMode] = useColorMode()
   useEffect(() => {
@@ -33,7 +33,7 @@ const AppLayout = ({ initialTitle = 'Home', children }) => {
   return (
     <LayoutContext.Provider value={{ title, setTitle }}>
       <Themed.root>
-        <NavBar />
+        <NavBar pageMenuItems={pageMenuItems} />
         {children}
       </Themed.root>
     </LayoutContext.Provider>

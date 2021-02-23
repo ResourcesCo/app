@@ -1,18 +1,12 @@
-import { Link, routes } from '@redwoodjs/router'
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
+import { useAuth } from '@redwoodjs/auth'
+import AppLayout from 'src/layouts/AppLayout'
+import EditCell from 'src/components/EditCell'
 
-const EditPage = () => {
-  return (
-    <>
-      <h1>EditPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/EditPage/EditPage.js</code>
-      </p>
-      <p>
-        My default route is named <code>edit</code>, link to me with `
-        <Link to={routes.edit()}>Edit</Link>`
-      </p>
-    </>
-  )
+const EditPage = ({ path }) => {
+  const { isAuthenticated } = useAuth()
+  return <AppLayout>{isAuthenticated && <EditCell path={path} />}</AppLayout>
 }
 
 export default EditPage

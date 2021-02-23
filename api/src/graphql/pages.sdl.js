@@ -20,13 +20,14 @@ export const schema = gql`
     body: String!
   }
 
-  input UpdatePageInput {
-    name: String
-    path: String
-    body: String
+  input EditPageInput {
+    title: String!
+    path: String!
+    body: String!
   }
 
   type Mutation {
     createPage(input: CreatePageInput!): Page
+    editPage(input: EditPageInput!): Page
   }
 `

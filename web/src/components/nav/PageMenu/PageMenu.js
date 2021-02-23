@@ -1,9 +1,23 @@
-const PageMenu = () => {
+/** @jsx jsx */
+import { jsx, IconButton } from 'theme-ui'
+import { BsThreeDots } from 'react-icons/bs'
+import { Menu } from '@szhsin/react-menu'
+
+const PageMenu = ({ pageMenuItems }) => {
   return (
-    <div>
-      <h2>{'PageMenu'}</h2>
-      <p>{'Find me in ./web/src/components/PageMenu/PageMenu.js'}</p>
-    </div>
+    <>
+      {pageMenuItems && (
+        <Menu
+          menuButton={
+            <IconButton>
+              <BsThreeDots />
+            </IconButton>
+          }
+        >
+          {pageMenuItems}
+        </Menu>
+      )}
+    </>
   )
 }
 

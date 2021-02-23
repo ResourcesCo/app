@@ -1,9 +1,10 @@
+/** @jsx jsx */
 import { jsx, Container } from 'theme-ui'
 import { Title } from 'src/layouts/AppLayout'
 import MarkdownView from 'src/components/MarkdownView'
 
 export const QUERY = gql`
-  query ViewQuery($path: String!) {
+  query PageQuery($path: String!) {
     page(path: $path) {
       name
       body

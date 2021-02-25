@@ -10,12 +10,13 @@ import {
   Checkbox,
   Message,
 } from 'theme-ui'
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { navigate } from '@redwoodjs/router'
 import { Title } from 'src/layouts/AppLayout'
 import getMarkdownTitle from 'src/lib/getMarkdownTitle'
 import CodeEditor from 'src/components/page/CodeEditor'
+import MarkdownView from 'src/components/MarkdownView'
 
 const CREATE_PAGE_MUTATION = gql`
   mutation CreatePageMutation($input: CreatePageInput!) {
@@ -42,6 +43,7 @@ const PageEditor = ({ path, body }) => {
   const mutation = editing ? EDIT_PAGE_MUTATION : CREATE_PAGE_MUTATION
   const mutationPageKey = editing ? 'editPage' : 'createPage'
 
+  const [preview, setPreview] = useState(false)
   const editorViewRef = useRef()
   const [mutate, { loading, error }] = useMutation(mutation, {
     onCompleted({ [mutationPageKey]: { path } }) {
@@ -56,12 +58,17 @@ const PageEditor = ({ path, body }) => {
           {error.message}
         </Message>
       )}
-      <CodeEditor
-        language="markdown"
-        showLineNumbers={false}
-        editorViewRef={editorViewRef}
-        initialValue={body || ''}
-      />
+      <div sx={preview ? { display: 'none' } : {}}>
+        <CodeEditor
+          language="markdown"
+          showLineNumbers={false}
+          editorViewRef={editorViewRef}
+          initialValue={body || ''}
+        />
+      </div>
+      {preview && (
+        <MarkdownView value={editorViewRef.current.state.doc.toString()} />
+      )}
       <Flex sx={{ my: 3 }}>
         <div sx={{ flexGrow: 1 }}>
           <Button
@@ -87,7 +94,10 @@ const PageEditor = ({ path, body }) => {
         </div>
         <Box>
           <Label mb={3} sx={{ userSelect: 'none' }}>
-            <Checkbox />
+            <Checkbox
+              checked={preview}
+              onChange={({ target: { checked } }) => setPreview(checked)}
+            />
             Preview
           </Label>
         </Box>

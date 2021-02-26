@@ -15,6 +15,7 @@ import { useMutation } from '@redwoodjs/web'
 import { navigate } from '@redwoodjs/router'
 import { Title } from 'src/layouts/AppLayout'
 import getMarkdownTitle from 'src/lib/getMarkdownTitle'
+import joinPath from 'src/lib/joinPath'
 import CodeEditor from 'src/components/page/CodeEditor'
 import MarkdownView from 'src/components/MarkdownView'
 
@@ -23,7 +24,7 @@ const CREATE_PAGE_MUTATION = gql`
     createPage(input: $input) {
       id
       name
-      path
+      folder
     }
   }
 `
@@ -33,21 +34,21 @@ const EDIT_PAGE_MUTATION = gql`
     editPage(input: $input) {
       id
       name
-      path
+      folder
     }
   }
 `
 
-const PageEditor = ({ path, body }) => {
-  const editing = path !== undefined
+const PageEditor = ({ name, folder, body }) => {
+  const editing = name !== undefined
   const mutation = editing ? EDIT_PAGE_MUTATION : CREATE_PAGE_MUTATION
   const mutationPageKey = editing ? 'editPage' : 'createPage'
 
   const [preview, setPreview] = useState(false)
   const editorViewRef = useRef()
   const [mutate, { loading, error }] = useMutation(mutation, {
-    onCompleted({ [mutationPageKey]: { path } }) {
-      navigate(`/${path}`)
+    onCompleted({ [mutationPageKey]: { name, folder } }) {
+      navigate(`/${joinPath(name, folder)}`)
     },
   })
   return (
@@ -78,7 +79,7 @@ const PageEditor = ({ path, body }) => {
               mutate({
                 variables: {
                   input: {
-                    ...(editing ? { path } : {}),
+                    ...(editing ? { name, folder } : {}),
                     title: getMarkdownTitle(body) || 'Untitled',
                     body,
                   },

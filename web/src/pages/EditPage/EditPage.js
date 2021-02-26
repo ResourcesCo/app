@@ -3,10 +3,16 @@ import { jsx } from 'theme-ui'
 import { useAuth } from '@redwoodjs/auth'
 import AppLayout from 'src/layouts/AppLayout'
 import EditCell from 'src/components/EditCell'
+import splitPath from 'src/lib/splitPath'
 
 const EditPage = ({ path }) => {
   const { isAuthenticated } = useAuth()
-  return <AppLayout>{isAuthenticated && <EditCell path={path} />}</AppLayout>
+  const [name, folder] = splitPath(path)
+  return (
+    <AppLayout>
+      {isAuthenticated && <EditCell name={name} folder={folder} />}
+    </AppLayout>
+  )
 }
 
 export default EditPage

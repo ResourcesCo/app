@@ -12,37 +12,51 @@ generator client {
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  authId       String?  @unique @default(uuid())
-  authProvider String   @default("unknown")
+  id           String         @id @default(uuid()) @db.Uuid
+  authId       String?        @unique @default(uuid())
+  authProvider String         @default("unknown")
   name         String
-  email        String
-  bot          Boolean
+  username     String?
+  bot          Boolean        @default(false)
+  admin        Boolean        @default(false)
   actions      Action[]
-
-  @@index([email])
+  pageRoles    UserPageRole[]
 }
 
 model Page {
-  id        String   @id @default(uuid()) @db.Uuid
+  id        String         @id @default(uuid()) @db.Uuid
   name      String
-  path      String   @unique
+  folder    String         @default("")
+  title     String
   body      String
-  metadata  Json
+  meta      String         @default("")
   computed  Json
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
   actions   Action[]
+  userRoles UserPageRole[]
 
-  @@index([name])
+  @@unique([folder, name])
+}
+
+model UserPageRole {
+  id     String @id @default(uuid()) @db.Uuid
+  role   String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.Uuid
+  page   Page   @relation(fields: [pageId], references: [id])
+  pageId String @db.Uuid
+
+  @@unique([userId, pageId, role])
 }
 
 model Action {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
-  path      String
+  folder    String   @default("")
   type      String
+  title     String
   body      String
-  metadata  Json
+  meta      String   @default("")
   computed  Json
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])

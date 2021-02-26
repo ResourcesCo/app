@@ -62,22 +62,25 @@ export const createPage = async (
     computed: {},
   }
 
-  let path = slugify(title)
+  let name = slugify(title)
+  let folder = ''
   let page
   try {
     page = await db.page.create({
       data: {
         ...pageProps,
-        path,
+        name,
+        folder,
       },
     })
   } catch (e) {
     if (e.code === 'P2002') {
-      path += `-${nanoid(7)}`
+      name += `-${nanoid(7)}`
       page = await db.page.create({
         data: {
           ...pageProps,
-          path,
+          name,
+          folder,
         },
       })
     } else {
@@ -89,7 +92,8 @@ export const createPage = async (
       userId: user.id,
       pageId: page.id,
       ...pageProps,
-      path,
+      name,
+      folder,
       type: 'create',
     },
   })
@@ -97,22 +101,21 @@ export const createPage = async (
 }
 
 export const editPage = async (
-  { input: { path, title, body } },
+  { input: { name, folder, title, body } },
   { context: { currentUser } }
 ) => {
   requireAuth()
   const user = await getUser(currentUser)
 
   const pageProps = {
-    name: title,
+    title,
     body,
-    metadata: {},
     computed: {},
   }
 
   let page
   page = await db.page.update({
-    where: { path },
+    where: { folder_name: { folder, name } },
     data: {
       ...pageProps,
     },
@@ -122,15 +125,16 @@ export const editPage = async (
       userId: user.id,
       pageId: page.id,
       ...pageProps,
-      path,
+      name,
+      folder,
       type: 'edit',
     },
   })
   return page
 }
 
-export const page = async ({ path }) => {
+export const page = async ({ folder, name }) => {
   requireAuth()
-  const page = db.page.findUnique({ where: { path } })
+  const page = db.page.findUnique({ where: { folder_name: { folder, name } } })
   return page
 }

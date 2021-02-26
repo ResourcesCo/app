@@ -2,9 +2,10 @@ export const schema = gql`
   type Page {
     id: String!
     name: String!
-    path: String!
+    folder: String!
+    title: String!
     body: String!
-    metadata: JSON!
+    meta: String!
     computed: JSON!
     createdAt: DateTime!
     actions: [Action]!
@@ -12,7 +13,7 @@ export const schema = gql`
 
   type Query {
     pages: [Page!]!
-    page(path: String!): Page
+    page(folder: String!, name: String!): Page
   }
 
   input CreatePageInput {
@@ -21,8 +22,9 @@ export const schema = gql`
   }
 
   input EditPageInput {
+    name: String!
+    folder: String!
     title: String!
-    path: String!
     body: String!
   }
 

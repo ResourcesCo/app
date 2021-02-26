@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing'
+import { render } from '@redwoodjs/testing'
 import { Loading, Empty, Failure, Success } from './ViewCell'
 import { standard } from './ViewCell.mock'
 
@@ -28,7 +28,7 @@ describe('ViewCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success view={standard().view} />)
+      render(<Success page={standard().page} />)
     }).not.toThrow()
   })
 })

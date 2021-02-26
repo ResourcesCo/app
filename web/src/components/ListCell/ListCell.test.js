@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing'
+import { render } from '@redwoodjs/testing'
 import { Loading, Empty, Failure, Success } from './ListCell'
 import { standard } from './ListCell.mock'
 
@@ -28,7 +28,7 @@ describe('ListCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success list={standard().list} />)
+      render(<Success pages={standard().pages} />)
     }).not.toThrow()
   })
 })

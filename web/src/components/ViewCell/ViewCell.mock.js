@@ -1,6 +1,7 @@
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({
-  view: {
-    id: 42,
+  page: {
+    name: 'My page',
+    body: 'This is my page!',
   },
 })

@@ -6,6 +6,8 @@ import NavBar from '../../components/nav/NavBar'
 const LayoutContext = createContext({
   title: 'Home',
   setTitle: () => undefined,
+  nextPage: undefined,
+  setNextPage: () => undefined,
 })
 
 export const useLayout = () => useContext(LayoutContext)
@@ -26,12 +28,13 @@ export const Title = ({ children }) => {
 
 const AppLayout = ({ initialTitle = 'Home', pageMenuItems, children }) => {
   const [title, setTitle] = useState(initialTitle)
+  const [nextPage, setNextPage] = useState()
   const [_colorMode, setColorMode] = useColorMode()
   useEffect(() => {
     setColorMode('light')
   })
   return (
-    <LayoutContext.Provider value={{ title, setTitle }}>
+    <LayoutContext.Provider value={{ title, setTitle, nextPage, setNextPage }}>
       <Themed.root>
         <NavBar pageMenuItems={pageMenuItems} />
         {children}

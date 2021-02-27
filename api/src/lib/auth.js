@@ -56,6 +56,7 @@
 // together with a collection of roles to check for role assignment:
 
 import { AuthenticationError, ForbiddenError, parseJWT } from '@redwoodjs/api'
+import { db } from './db'
 
 /**
  * Use requireAuth in your services to check that a user is logged in,
@@ -108,6 +109,17 @@ export const getCurrentUser = async (decoded, context) => {
     )
   }
   result.roles = parseJWT({ decoded }).roles
+  if (typeof decoded?.sub === 'string') {
+    const userRecord = await db.user.findUnique({
+      where: {
+        authId_authProvider: {
+          authId: decoded.sub,
+          authProvider: 'netlify-identity',
+        },
+      },
+    })
+    result = { ...result, ...userRecord }
+  }
   return result
 }
 

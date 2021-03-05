@@ -7,7 +7,7 @@ import AppLayout from 'src/layouts/AppLayout'
 const NewPage = () => {
   const { isAuthenticated } = useAuth()
   return (
-    <AppLayout requireOnboarding={true}>
+    <AppLayout requireOnboarding={false}>
       {isAuthenticated && <PageEditor />}
     </AppLayout>
   )

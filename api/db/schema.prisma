@@ -12,15 +12,15 @@ generator client {
 }
 
 model User {
-  id           String         @id @default(uuid()) @db.Uuid
-  authId       String?        @unique @default(uuid())
-  authProvider String         @default("unknown")
+  id           String     @id @default(uuid()) @db.Uuid
+  authId       String?    @unique @default(uuid())
+  authProvider String     @default("unknown")
   name         String
   username     String?
-  bot          Boolean        @default(false)
-  admin        Boolean        @default(false)
+  bot          Boolean    @default(false)
+  admin        Boolean    @default(false)
   actions      Action[]
-  pageRoles    UserPageRole[]
+  pageRoles    PageRole[]
 
   @@unique([authId, authProvider])
 }
@@ -34,21 +34,36 @@ model Page {
   meta      String         @default("")
   computed  Json
   createdAt DateTime       @default(now())
+  locations PageLocation[]
   actions   Action[]
-  userRoles UserPageRole[]
+  roles     PageRole[]
 
   @@unique([folder, name])
 }
 
-model UserPageRole {
+model PageLocation {
+  id       String @id @default(uuid()) @db.Uuid
+  location String @unique
+  page     Page   @relation(fields: [pageId], references: [id])
+  pageId   String @db.Uuid
+}
+
+model Role {
+  id           String     @id @default(uuid()) @db.Uuid
+  name         String     @unique
+  UserPageRole PageRole[]
+}
+
+model PageRole {
   id     String @id @default(uuid()) @db.Uuid
-  role   String
+  role   Role   @relation(fields: [roleId], references: [id])
+  roleId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
   userId String @db.Uuid
   page   Page   @relation(fields: [pageId], references: [id])
   pageId String @db.Uuid
 
-  @@unique([userId, pageId, role])
+  @@unique([userId, pageId, roleId])
 }
 
 model Action {

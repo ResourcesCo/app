@@ -10,31 +10,14 @@ export const schema = gql`
   type CurrentUser {
     id: String
     name: String
-    email: String
+    username: String
   }
 
   type Query {
     users: [User!]!
-    currentUser: CurrentUser
-  }
-
-  input CreateUserInput {
-    name: String!
-    email: String!
-    bot: Boolean!
-  }
-
-  input UpdateUserInput {
-    name: String
-    email: String
-    bot: Boolean
-  }
-
-  input CreateCurrentUserInput {
-    name: String
   }
 
   type Mutation {
-    createCurrentUser(input: CreateCurrentUserInput!): CurrentUser
+    updateCurrentUser(name: String, username: String): CurrentUser
   }
 `

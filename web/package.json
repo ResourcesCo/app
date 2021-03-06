@@ -39,7 +39,9 @@
     "@redwoodjs/web": "^0.25.1",
     "@szhsin/react-menu": "^1.6.1",
     "@theme-ui/presets": "^0.6.0-alpha.7",
+    "chroma-js": "^2.1.1",
     "hast-util-sanitize": "^3.0.2",
+    "lodash": "^4.17.21",
     "netlify-identity-widget": "^1.9.1",
     "prop-types": "^15.7.2",
     "react-icons": "^4.2.0",
@@ -52,5 +54,8 @@
     "theme-ui": "^0.6.0-alpha.7",
     "unified": "^9.2.0",
     "unist-util-visit": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/chroma-js": "^2.1.3"
   }
 }

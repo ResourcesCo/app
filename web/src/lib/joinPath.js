@@ -1,5 +1,5 @@
-const joinPath = (name, _folder) => {
-  return name
+const joinPath = (name, folder) => {
+  return folder + (folder === '' ? '' : '/') + name
 }
 
 export default joinPath

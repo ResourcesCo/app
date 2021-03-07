@@ -11,12 +11,18 @@ import { Router, Route } from '@redwoodjs/router'
 import HomePage from 'src/pages/HomePage'
 import NewPage from 'src/pages/NewPage'
 
+const userRouteParamTypes = {
+  path: {
+    constraint: /(?!-[\/$])[^/]+(?:\/(?!-[\/$])[^/]+)*/,
+  },
+}
+
 const Routes = () => {
   return (
-    <Router>
+    <Router paramTypes={userRouteParamTypes}>
       <Route path="/" page={HomePage} name="home" />
-      <Route path="/{path}" page={ViewPage} name="view" />
-      <Route path="/{path}/-/edit" page={EditPage} name="edit" />
+      <Route path="/{path:path}" page={ViewPage} name="view" />
+      <Route path="/{path:path}/-/edit" page={EditPage} name="edit" />
       <Route path="/-/new" page={NewPage} name="new" />
       <Route path="/-/sign-up" page={SignUpPage} name="signUp" />
       <Route notfound page={NotFoundPage} />

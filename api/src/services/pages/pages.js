@@ -2,7 +2,6 @@ import { db } from 'src/lib/db'
 import slugify from 'slugify'
 import { nanoid } from 'nanoid'
 import { requireAuth } from 'src/lib/auth'
-import { getUser } from 'src/lib/utils/user'
 
 let roles
 
@@ -47,10 +46,12 @@ export const Page = {
 
 export const createPage = async (
   { input: { title, body } },
-  { context: { currentUser } }
+  { context: { currentUser: user } }
 ) => {
   requireAuth()
-  const user = await getUser(currentUser)
+  if (!user.username) {
+    throw new Error('User is missing a username')
+  }
 
   const pageProps = {
     title,
@@ -59,7 +60,7 @@ export const createPage = async (
   }
 
   let name = slugify(title)
-  let folder = ''
+  let folder = user.username
   let page
   const roleId = await getRole('admin')
 
@@ -111,10 +112,12 @@ export const createPage = async (
 
 export const editPage = async (
   { input: { name, folder, title, body } },
-  { context: { currentUser } }
+  { context: { currentUser: user } }
 ) => {
   requireAuth()
-  const user = await getUser(currentUser)
+  if (!user.username) {
+    throw new Error('User is missing a username')
+  }
 
   const pageProps = {
     title,

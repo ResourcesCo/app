@@ -5,9 +5,11 @@ export const standard = defineScenario({
       path: 'String',
       type: 'String',
       body: 'String',
-      metadata: { foo: 'bar' },
+      meta: 'String',
       computed: { foo: 'bar' },
-      user: { create: { name: 'String', email: 'String4409120', bot: false } },
+      user: {
+        create: { name: 'String', username: 'String4409120', bot: false },
+      },
       page: {
         create: {
           name: 'String',
@@ -24,9 +26,11 @@ export const standard = defineScenario({
       path: 'String',
       type: 'String',
       body: 'String',
-      metadata: { foo: 'bar' },
+      meta: 'String',
       computed: { foo: 'bar' },
-      user: { create: { name: 'String', email: 'String640660', bot: false } },
+      user: {
+        create: { name: 'String', username: 'String640660', bot: false },
+      },
       page: {
         create: {
           name: 'String',

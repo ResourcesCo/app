@@ -4,6 +4,7 @@ import unified from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
+import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeReact from 'rehype-react'
@@ -37,12 +38,43 @@ const TableRow = ({ children, ...props }) => (
   <Themed.tr {...props}>{children.filter(filterWhitespace)}</Themed.tr>
 )
 
+const Sup = ({ children, ...props }) => (
+  <sup
+    sx={{
+      fontSize: '75%',
+      lineHeight: 0,
+      position: 'relative',
+      verticalAlign: 'baseline',
+      top: '-0.5em',
+    }}
+    {...props}
+  >
+    {children}
+  </sup>
+)
+
+const Sub = ({ children, ...props }) => (
+  <sup
+    sx={{
+      fontSize: '75%',
+      lineHeight: 0,
+      position: 'relative',
+      verticalAlign: 'baseline',
+      bottom: '-0.25em',
+    }}
+    {...props}
+  >
+    {children}
+  </sup>
+)
+
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
-  .use(remarkRehype)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
   .use(rehypeHighlight)
-  .use(rehypeSanitize)
+  .use(rehypeSanitize, schema)
   .use(rehypeReact, {
     createElement: jsx,
     components: {
@@ -58,6 +90,8 @@ const processor = unified()
       tr: TableRow,
       th: Themed.th,
       td: Themed.td,
+      sup: Sup,
+      sub: Sub,
     },
   })
 

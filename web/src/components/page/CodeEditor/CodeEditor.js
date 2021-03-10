@@ -31,6 +31,7 @@ import { cssLanguage } from '@codemirror/lang-css'
 import { pythonLanguage } from '@codemirror/lang-python'
 import { markdown } from '@codemirror/lang-markdown'
 import { jsonLanguage } from '@codemirror/lang-json'
+import { sql, PostgreSQL } from '@codemirror/lang-sql'
 import darkTheme from './themes/ui/dark'
 import darkHighlightStyle from './themes/highlight/dark'
 import lightTheme from './themes/ui/light'
@@ -53,6 +54,7 @@ const langs = {
   css: new LanguageSupport(cssLanguage),
   python: new LanguageSupport(pythonLanguage),
   json: new LanguageSupport(jsonLanguage),
+  sql: sql({ dialect: PostgreSQL }),
   html: undefined,
 }
 langs.html = new LanguageSupport(htmlLanguage, [langs.css, langs.javascript])
@@ -63,6 +65,7 @@ const languageExtensions = {
   html: langs.html,
   css: langs.css,
   python: langs.python,
+  sql: langs.sql,
   markdown: markdown({
     codeLanguages: [
       LanguageDescription.of({
@@ -96,6 +99,12 @@ const languageExtensions = {
         alias: ['py'],
         async load() {
           return langs.python
+        },
+      }),
+      LanguageDescription.of({
+        name: 'sql',
+        async load() {
+          return langs.sql
         },
       }),
     ],

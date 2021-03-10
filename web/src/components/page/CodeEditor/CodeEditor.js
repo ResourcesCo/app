@@ -8,7 +8,7 @@ import {
   highlightActiveLine,
   keymap,
 } from '@codemirror/view'
-import { EditorState, tagExtension } from '@codemirror/state'
+import { EditorState, Compartment } from '@codemirror/state'
 import { history, historyKeymap } from '@codemirror/history'
 import { foldGutter, foldKeymap } from '@codemirror/fold'
 import {
@@ -36,9 +36,9 @@ import darkHighlightStyle from './themes/highlight/dark'
 import lightTheme from './themes/ui/light'
 import lightHighlightStyle from './themes/highlight/light'
 
-const languageTag = Symbol('lang')
-const viewThemeTag = Symbol('viewTheme')
-const highlightThemeTag = Symbol('highlightTheme')
+const languageCompartment = new Compartment()
+const viewThemeCompartment = new Compartment()
+const highlightThemeCompartment = new Compartment()
 
 const viewThemeExtensions = {
   dark: darkTheme,
@@ -116,7 +116,6 @@ const CodeEditor = ({
   const editorViewRefInternal = useRef()
   const containerRef = useRef()
   const prevConfigRef = useRef({ language: undefined, theme: undefined })
-
   const editorViewRef = editorViewRefProp || editorViewRefInternal
 
   useEffect(() => {
@@ -149,10 +148,10 @@ const CodeEditor = ({
             ...lintKeymap,
           ]),
           ...(languageExtensions[language]
-            ? [tagExtension(languageTag, languageExtensions[language])]
+            ? [languageCompartment.of(languageExtensions[language])]
             : []),
-          tagExtension(viewThemeTag, viewThemeExtensions[theme]),
-          tagExtension(highlightThemeTag, highlightThemeExtensions[theme]),
+          viewThemeCompartment.of(viewThemeExtensions[theme]),
+          highlightThemeCompartment.of(highlightThemeExtensions[theme]),
           ...additionalExtensions,
         ]
         editorViewRef.current = new EditorView({
@@ -163,24 +162,24 @@ const CodeEditor = ({
           parent: containerRef.current,
         })
       } else {
-        const langUpdated = language !== prevConfigRef.current.language
-        const themeUpdated = theme !== prevConfigRef.current.theme
-        if (langUpdated || themeUpdated) {
-          editorViewRef.current.dispatch({
-            reconfigure: {
-              ...(langUpdated && {
-                [languageTag]: languageExtensions[language]
-                  ? [languageExtensions[language]]
-                  : [],
-              }),
-              ...(themeUpdated && {
-                [viewThemeTag]: viewThemeExtensions[theme],
-              }),
-              ...(themeUpdated && {
-                [highlightThemeTag]: highlightThemeExtensions[theme],
-              }),
-            },
-          })
+        const effects = []
+        if (language !== prevConfigRef.current.language) {
+          effects.push(
+            languageCompartment.reconfigure(languageExtensions[language])
+          )
+        }
+        if (theme !== prevConfigRef.current.theme) {
+          effects.push(
+            viewThemeCompartment.reconfigure(viewThemeExtensions[theme])
+          )
+          effects.push(
+            highlightThemeCompartment.reconfigure(
+              highlightThemeExtensions[theme]
+            )
+          )
+        }
+        if (effects.length > 0) {
+          editorViewRef.current.dispatch({ effects })
         }
       }
       prevConfigRef.current = currentConfig
@@ -192,6 +191,9 @@ const CodeEditor = ({
     language,
     theme,
     additionalExtensions,
+    completionExtension,
+    showLineNumbers,
+    customKeymap,
   ])
 
   return (

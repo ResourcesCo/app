@@ -1,4 +1,4 @@
-import {EditorView} from "@codemirror/view"
+import { EditorView } from '@codemirror/view'
 
 // Based on https://github.com/codemirror/theme-one-dark
 // Copyright (C) 2018-2021 by Marijn Haverbeke <marijnh@gmail.com> and others
@@ -6,71 +6,94 @@ import {EditorView} from "@codemirror/view"
 
 // Using https://github.com/one-dark/vscode-one-dark-theme/ as reference for the colors
 
-const ivory = "#abb2bf",
-  darkBackground = "#21252b",
-  highlightBackground = "#2c313a",
-  background = "#282c34",
-  selection = "#3E4451",
-  cursor = "#528bff"
+const chalky = '#e5c07b',
+  coral = '#e06c75',
+  cyan = '#56b6c2',
+  invalid = '#ffffff',
+  ivory = '#abb2bf',
+  stone = '#7d8799', // Brightened compared to original to increase contrast
+  malibu = '#61afef',
+  sage = '#98c379',
+  whiskey = '#d19a66',
+  violet = '#c678dd',
+  darkBackground = '#21252b',
+  highlightBackground = '#2c313a',
+  background = '#282c34',
+  selection = '#3E4451',
+  cursor = '#528bff'
 
 /// The editor theme styles for One Dark.
-export default EditorView.theme({
-  $: {
-    color: ivory,
-    backgroundColor: background,
-    caretColor: cursor,
-    "&$focused": {
-      outline: "none"
-    }
-  },
+const oneDarkTheme = EditorView.theme(
+  {
+    '&': {
+      color: ivory,
+      backgroundColor: background,
+      '& ::selection': { backgroundColor: selection },
+      caretColor: cursor,
+    },
 
-  "$$focused $cursor": {borderLeftColor: cursor},
-  "$$focused $selectionBackground": {backgroundColor: selection},
+    '&.cm-wrap': {
+      outline: 'none',
+    },
 
-  $panels: {backgroundColor: darkBackground, color: ivory},
-  "$panels.top": {borderBottom: "2px solid black"},
-  "$panels.bottom": {borderTop: "2px solid black"},
+    '&.cm-wrap .cm-scroller': {
+      outline: 'none',
+    },
 
-  $searchMatch: {
-    backgroundColor: "#72a1ff59",
-    outline: "1px solid #457dff"
-  },
-  "$searchMatch.selected": {
-    backgroundColor: "#6199ff2f"
-  },
+    '&.cm-wrap .cm-content': {
+      outline: 'none',
+    },
 
-  $activeLine: {backgroundColor: highlightBackground},
-  $selectionMatch: {backgroundColor: "#aafe661a"},
-
-  "$matchingBracket, $nonmatchingBracket": {
-    backgroundColor: "#bad0f847",
-    outline: "1px solid #515a6b"
-  },
-
-  $gutters: {
-    backgroundColor: background,
-    color: "#545868",
-    border: "none"
-  },
-  "$gutterElement.lineNumber": {color: "inherit"},
-
-  $foldPlaceholder: {
-    backgroundColor: "transparent",
-    border: "none",
-    color: "#ddd"
-  },
-
-  $tooltip: {
-    border: "1px solid #181a1f",
-    backgroundColor: darkBackground
-  },
-  "$tooltip.autocomplete": {
-    "& > ul > li[aria-selected]": {
+    '&.cm-focused .cm-cursor': { borderLeftColor: cursor },
+    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground': {
       backgroundColor: selection,
-      color: ivory
     },
-    "& > ul": {
-      maxHeight: '10.15em',
+
+    '.cm-panels': { backgroundColor: darkBackground, color: ivory },
+    '.cm-panels.cm-panels-top': { borderBottom: '2px solid black' },
+    '.cm-panels.cm-panels-bottom': { borderTop: '2px solid black' },
+
+    '.cm-searchMatch': {
+      backgroundColor: '#72a1ff59',
+      outline: '1px solid #457dff',
+    },
+    '.cm-searchMatch.cm-searchMatch-selected': {
+      backgroundColor: '#6199ff2f',
+    },
+
+    '.cm-activeLine': { backgroundColor: highlightBackground },
+    '.cm-selectionMatch': { backgroundColor: '#aafe661a' },
+
+    '.cm-matchingBracket, .cm-nonmatchingBracket': {
+      backgroundColor: '#bad0f847',
+      outline: '1px solid #515a6b',
+    },
+
+    '.cm-gutters': {
+      backgroundColor: background,
+      color: stone,
+      border: 'none',
+    },
+    '.cm-lineNumbers .cm-gutterElement': { color: 'inherit' },
+
+    '.cm-foldPlaceholder': {
+      backgroundColor: 'transparent',
+      border: 'none',
+      color: '#ddd',
+    },
+
+    '.cm-tooltip': {
+      border: '1px solid #181a1f',
+      backgroundColor: darkBackground,
+    },
+    '.cm-tooltip-autocomplete': {
+      '& > ul > li[aria-selected]': {
+        backgroundColor: highlightBackground,
+        color: ivory,
+      },
     },
   },
-}, {dark: true})
+  { dark: true }
+)
+
+export default oneDarkTheme

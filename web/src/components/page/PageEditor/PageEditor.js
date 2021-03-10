@@ -62,6 +62,7 @@ const PageEditor = ({ name, folder, body }) => {
       <div sx={preview ? { display: 'none' } : {}}>
         <CodeEditor
           language="markdown"
+          theme="light"
           showLineNumbers={false}
           editorViewRef={editorViewRef}
           initialValue={body || ''}

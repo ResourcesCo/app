@@ -87,7 +87,6 @@ export const createPage = async (
       data: pageData,
     })
   } catch (e) {
-    console.log('Caught error with code', e.code)
     if (e.code === 'P2002') {
       name += `-${nanoid(7)}`
       const primaryLocation = getPageLocation(name, folder)
@@ -150,14 +149,11 @@ export const page = async ({ folder, name }) => {
   let page = await db.page.findUnique({
     where: { folder_name: { folder, name } },
   })
-  console.log({ page })
   if (!page) {
-    console.log('again', { page }, getPageLocation(name, folder).toLowerCase())
     const location = await db.pageLocation.findUnique({
       where: { location: getPageLocation(name, folder).toLowerCase() },
       include: { page: true },
     })
-    console.log({ location })
     if (location) {
       page = location.page
     }

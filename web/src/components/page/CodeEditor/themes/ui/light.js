@@ -1,4 +1,4 @@
-import {EditorView} from "@codemirror/view"
+import { EditorView } from '@codemirror/view'
 import theme from '../../../../../theme'
 
 // Based on https://github.com/codemirror/theme-one-dark
@@ -9,66 +9,78 @@ import theme from '../../../../../theme'
 
 const foreground = theme.colors.foreground,
   lightBackground = theme.colors.background,
-  highlightBackground = "#2c313a",
+  highlightBackground = '#2c313a',
   background = theme.colors.background,
-  selection = "#339cec33",
-  cursor = "#528bff"
+  selection = '#339cec33',
+  cursor = '#528bff'
 
 /// The editor theme styles for One Dark, customized to light.
-export default EditorView.theme({
-  $: {
-    color: foreground,
-    backgroundColor: background,
-    caretColor: cursor,
-    "&$focused": {
-      outline: "none"
-    }
+export default EditorView.theme(
+  {
+    '&': {
+      color: foreground,
+      backgroundColor: background,
+      caretColor: cursor,
+    },
+
+    '&.cm-wrap': {
+      outline: 'none',
+    },
+
+    '&.cm-wrap .cm-scroller': {
+      outline: 'none',
+    },
+
+    '&.cm-wrap .cm-content': {
+      outline: 'none',
+    },
+
+    '&.cm-focused .cm-cursor': { borderLeftColor: cursor },
+    '&.cm-focused .cm-selectionBackground': { backgroundColor: selection },
+
+    '.cm-panels': { backgroundColor: lightBackground, color: foreground },
+    '.cm-panels.cm-panels-top': { borderBottom: '2px solid #d9d9d9' },
+    '.cm-panels.cm-panels-bottom': { borderTop: '2px solid #d9d9d9' },
+
+    '.cm-searchMatch': {
+      backgroundColor: '#339cec33',
+      outline: '1px solid #d9d9d9',
+    },
+    '.cm-searchMatch.cm-searchMatch-selected': {
+      backgroundColor: '#339cec33',
+    },
+
+    '.cm-activeLine': { backgroundColor: background },
+    '.cm-selectionMatch': { backgroundColor: '#aafe661a' },
+
+    '.cm-matchingBracket, .cm-nonmatchingBracket': {
+      backgroundColor: '#bad0f847',
+      outline: '1px solid #515a6b',
+    },
+
+    '.cm-gutters': {
+      backgroundColor: background,
+      color: '#545868',
+      border: 'none',
+    },
+    '.cm-lineNumbers .cm-gutterElement': { color: 'inherit' },
+
+    '.cm-foldPlaceholder': {
+      backgroundColor: 'transparent',
+      border: 'none',
+      color: '#ddd',
+    },
+
+    '.cm-tooltip': {
+      border: '1px solid #181a1f',
+      backgroundColor: lightBackground,
+    },
+    '.cm-tooltip-autocomplete': {
+      '& > ul > li[aria-selected]': {
+        backgroundColor: highlightBackground,
+        color: foreground,
+      },
+    },
   },
-
-  "$$focused $cursor": {borderLeftColor: cursor},
-  "$$focused $selectionBackground": {backgroundColor: selection},
-
-  $panels: {backgroundColor: lightBackground, color: foreground},
-  "$panels.top": {borderBottom: "2px solid #d9d9d9"},
-  "$panels.bottom": {borderTop: "2px solid #d9d9d9"},
-
-  $searchMatch: {
-    backgroundColor: "#339cec33",
-    outline: "1px solid #d9d9d9"
-  },
-  "$searchMatch.selected": {
-    backgroundColor: "#339cec33"
-  },
-
-  $activeLine: {backgroundColor: background},
-  $selectionMatch: {backgroundColor: "#aafe661a"},
-
-  "$matchingBracket, $nonmatchingBracket": {
-    backgroundColor: "#bad0f847",
-    outline: "1px solid #515a6b"
-  },
-
-  $gutters: {
-    backgroundColor: background,
-    color: "#545868",
-    border: "none"
-  },
-  "$gutterElement.lineNumber": {color: "inherit"},
-
-  $foldPlaceholder: {
-    backgroundColor: "transparent",
-    border: "none",
-    color: "#ddd"
-  },
-
-  $tooltip: {
-    border: "1px solid #181a1f",
-    backgroundColor: lightBackground
-  },
-  "$tooltip.autocomplete": {
-    "& > ul > li[aria-selected]": {
-      backgroundColor: highlightBackground,
-      color: foreground
-    }
-  }
-}, {dark: false})
+  { dark: false }
+)

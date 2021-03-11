@@ -24,6 +24,7 @@ const CREATE_PAGE_MUTATION = gql`
     createPage(input: $input) {
       id
       name
+      title
       folder
     }
   }
@@ -34,12 +35,13 @@ const EDIT_PAGE_MUTATION = gql`
     editPage(input: $input) {
       id
       name
+      title
       folder
     }
   }
 `
 
-const PageEditor = ({ name, folder, body }) => {
+const PageEditor = ({ name, folder, title, body }) => {
   const editing = name !== undefined
   const mutation = editing ? EDIT_PAGE_MUTATION : CREATE_PAGE_MUTATION
   const mutationPageKey = editing ? 'editPage' : 'createPage'
@@ -53,7 +55,40 @@ const PageEditor = ({ name, folder, body }) => {
   })
   return (
     <Container sx={{ maxWidth: 768, p: 2, pt: 4, mx: 'auto' }}>
-      <Title>New Page</Title>
+      <Title>{title || 'New Page'}</Title>
+      <Flex sx={{ mb: 3 }}>
+        <div sx={{ flexGrow: 1 }}>
+          <Box>
+            <Label mb={3} sx={{ userSelect: 'none' }}>
+              <Checkbox
+                checked={preview}
+                onChange={({ target: { checked } }) => setPreview(checked)}
+              />
+              Preview
+            </Label>
+          </Box>
+        </div>
+        <Button
+          ml={2}
+          onClick={() => {
+            const body = editorViewRef.current.state.doc.toString()
+            mutate({
+              variables: {
+                input: {
+                  ...(editing ? { name, folder } : {}),
+                  title: getMarkdownTitle(body) || 'Untitled',
+                  body,
+                },
+              },
+            })
+          }}
+        >
+          Save
+          {loading && (
+            <Spinner sx={{ color: 'white', size: 18, ml: 2, mb: '-3px' }} />
+          )}
+        </Button>
+      </Flex>
       {error && (
         <Message variant="error" sx={{ mb: 3 }}>
           {error.message}
@@ -71,39 +106,6 @@ const PageEditor = ({ name, folder, body }) => {
       {preview && (
         <MarkdownView value={editorViewRef.current.state.doc.toString()} />
       )}
-      <Flex sx={{ my: 3 }}>
-        <div sx={{ flexGrow: 1 }}>
-          <Button
-            mr={2}
-            onClick={() => {
-              const body = editorViewRef.current.state.doc.toString()
-              mutate({
-                variables: {
-                  input: {
-                    ...(editing ? { name, folder } : {}),
-                    title: getMarkdownTitle(body) || 'Untitled',
-                    body,
-                  },
-                },
-              })
-            }}
-          >
-            Save
-            {loading && (
-              <Spinner sx={{ color: 'white', size: 18, ml: 2, mb: '-3px' }} />
-            )}
-          </Button>
-        </div>
-        <Box>
-          <Label mb={3} sx={{ userSelect: 'none' }}>
-            <Checkbox
-              checked={preview}
-              onChange={({ target: { checked } }) => setPreview(checked)}
-            />
-            Preview
-          </Label>
-        </Box>
-      </Flex>
     </Container>
   )
 }

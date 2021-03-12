@@ -1,26 +1,25 @@
 /** @jsx jsx */
-import { jsx, Flex, IconButton, useThemeUI } from 'theme-ui'
+import { jsx, Flex, IconButton } from 'theme-ui'
 import { navigate, routes } from '@redwoodjs/router'
-import { BsFillPlusSquareFill, BsFilePlus } from 'react-icons/bs'
+import { BsPlusSquare, BsFilePlus } from 'react-icons/bs'
 import { Menu, MenuItem } from '@szhsin/react-menu'
+import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
 const CreateMenu = () => {
-  const { theme } = useThemeUI()
-  const menuItemStyles = {
-    paddingLeft: 0,
-    paddingRight: 0,
-    active: { backgroundColor: theme.colors.primary },
-  }
+  const { menuStyles } = useLayout()
   return (
     <Menu
       menuButton={
         <IconButton>
-          <BsFillPlusSquareFill />
+          <BsPlusSquare />
         </IconButton>
       }
-      styles={{ marginLeft: -10 }}
+      styles={menuStyles.menu.right}
     >
-      <MenuItem onClick={() => navigate(routes.new())} styles={menuItemStyles}>
+      <MenuItem
+        onClick={() => navigate(routes.new())}
+        styles={menuStyles.menuItem}
+      >
         <Flex sx={{ alignItems: 'center', px: 3 }}>
           <BsFilePlus sx={{ mr: 2 }} />
           New Page

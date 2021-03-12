@@ -1,18 +1,14 @@
 /** @jsx jsx */
-import { jsx, IconButton, Flex, useThemeUI } from 'theme-ui'
+import { jsx, IconButton, Flex } from 'theme-ui'
 import { useAuth } from '@redwoodjs/auth'
 import { BsPerson } from 'react-icons/bs'
 import { BiLogIn, BiLogOut } from 'react-icons/bi'
 import { Menu, MenuItem } from '@szhsin/react-menu'
+import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
 const AvatarMenu = () => {
   const { logIn, logOut, isAuthenticated, currentUser } = useAuth()
-  const { theme } = useThemeUI()
-  const menuItemStyles = {
-    paddingLeft: 0,
-    paddingRight: 0,
-    active: { backgroundColor: theme.colors.primary },
-  }
+  const { menuStyles } = useLayout()
   return (
     <Menu
       menuButton={
@@ -20,17 +16,17 @@ const AvatarMenu = () => {
           <BsPerson />
         </IconButton>
       }
-      styles={{ marginLeft: -10 }}
+      styles={menuStyles.menu.right}
     >
       {isAuthenticated && currentUser ? (
-        <MenuItem onClick={logOut} styles={menuItemStyles}>
+        <MenuItem onClick={logOut} styles={menuStyles.menuItem}>
           <Flex sx={{ alignItems: 'center', px: 3 }}>
             <BiLogOut sx={{ mr: 2 }} />
             Sign Out
           </Flex>
         </MenuItem>
       ) : (
-        <MenuItem onClick={logIn} styles={menuItemStyles}>
+        <MenuItem onClick={logIn} styles={menuStyles.menuItem}>
           <Flex sx={{ alignItems: 'center', px: 3 }}>
             <BiLogIn sx={{ mr: 2 }} />
             Sign In

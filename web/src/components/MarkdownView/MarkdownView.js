@@ -9,6 +9,7 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeReact from 'rehype-react'
 import defaultSchema from 'hast-util-sanitize/lib/github'
+import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
 const schema = {
   ...defaultSchema,
@@ -95,8 +96,13 @@ const processor = unified()
     },
   })
 
-const MarkdownView = ({ value }) => (
-  <div>{processor.processSync(value).result}</div>
-)
+const MarkdownView = ({ value }) => {
+  const { highlightClass, wordWrap } = useLayout()
+  return (
+    <div className={`${highlightClass} ${wordWrap ? 'rco-wrap-hljs' : ''}`}>
+      {processor.processSync(value).result}
+    </div>
+  )
+}
 
 export default MarkdownView

@@ -19,7 +19,6 @@ netlifyIdentity.init()
 const currentUser = async () => {
   const currentUser = netlifyIdentity.currentUser()
   if (typeof currentUser?.jwt === 'function') {
-    console.log('awaiting currentUser.jwt() before returning currentUser')
     await currentUser.jwt()
   }
   return currentUser

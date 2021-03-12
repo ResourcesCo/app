@@ -36,10 +36,12 @@ import darkTheme from './themes/ui/dark'
 import darkHighlightStyle from './themes/highlight/dark'
 import lightTheme from './themes/ui/light'
 import lightHighlightStyle from './themes/highlight/light'
+import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
 const languageCompartment = new Compartment()
 const viewThemeCompartment = new Compartment()
 const highlightThemeCompartment = new Compartment()
+const lineWrappingCompartment = new Compartment()
 
 const viewThemeExtensions = {
   dark: darkTheme,
@@ -115,7 +117,7 @@ const CodeEditor = ({
   initialValue = '',
   editorViewRef: editorViewRefProp,
   language = undefined,
-  theme = 'light',
+  theme: themeProp = undefined,
   completionExtension,
   additionalExtensions = [],
   customKeymap = [],
@@ -124,11 +126,19 @@ const CodeEditor = ({
 }) => {
   const editorViewRefInternal = useRef()
   const containerRef = useRef()
-  const prevConfigRef = useRef({ language: undefined, theme: undefined })
+  const prevConfigRef = useRef({
+    language: undefined,
+    theme: undefined,
+    lineWrapping: undefined,
+  })
   const editorViewRef = editorViewRefProp || editorViewRefInternal
+  const { colorMode, wordWrap } = useLayout()
+
+  const theme =
+    themeProp || (['dark', 'deep'].includes(colorMode) ? 'dark' : 'light')
 
   useEffect(() => {
-    const currentConfig = { language, theme }
+    const currentConfig = { language, theme, wordWrap }
     if (containerRef.current) {
       if (!editorViewRef.current) {
         const extensions = [
@@ -161,6 +171,7 @@ const CodeEditor = ({
             : []),
           viewThemeCompartment.of(viewThemeExtensions[theme]),
           highlightThemeCompartment.of(highlightThemeExtensions[theme]),
+          lineWrappingCompartment.of(wordWrap ? [EditorView.lineWrapping] : []),
           ...additionalExtensions,
         ]
         editorViewRef.current = new EditorView({
@@ -184,6 +195,13 @@ const CodeEditor = ({
           effects.push(
             highlightThemeCompartment.reconfigure(
               highlightThemeExtensions[theme]
+            )
+          )
+        }
+        if (wordWrap !== prevConfigRef.current.wordWrap) {
+          effects.push(
+            lineWrappingCompartment.reconfigure(
+              wordWrap ? [EditorView.lineWrapping] : []
             )
           )
         }

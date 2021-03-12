@@ -1,17 +1,13 @@
 /** @jsx jsx */
-import { jsx, Flex, IconButton, useThemeUI } from 'theme-ui'
+import { jsx, Flex, IconButton } from 'theme-ui'
 import { navigate, routes } from '@redwoodjs/router'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { BsHouse } from 'react-icons/bs'
 import { Menu, MenuItem } from '@szhsin/react-menu'
+import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
 const AppMenu = () => {
-  const { theme } = useThemeUI()
-  const menuItemStyles = {
-    paddingLeft: 0,
-    paddingRight: 0,
-    active: { backgroundColor: theme.colors.primary },
-  }
+  const { menuStyles } = useLayout()
   return (
     <Menu
       menuButton={
@@ -19,9 +15,12 @@ const AppMenu = () => {
           <GiHamburgerMenu />
         </IconButton>
       }
-      styles={{ marginRight: -10 }}
+      styles={menuStyles.menu.left}
     >
-      <MenuItem onClick={() => navigate(routes.home())} styles={menuItemStyles}>
+      <MenuItem
+        onClick={() => navigate(routes.home())}
+        styles={menuStyles.menuItem}
+      >
         <Flex sx={{ alignItems: 'center', px: 3 }}>
           <BsHouse sx={{ mr: 2 }} />
           Home

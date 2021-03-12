@@ -18,7 +18,14 @@ const NavBar = ({ pageInfo }) => {
   })
   useOnboarding({ requireOnboarding: pageInfo.requireOnboarding || false })
   return (
-    <Flex sx={{ p: 1, alignItems: 'center', borderBottom: 'divider' }}>
+    <Flex
+      sx={{
+        p: 1,
+        alignItems: 'center',
+        borderBottom: 'divider',
+        borderColor: 'lightGray',
+      }}
+    >
       <AppMenu />
       <Box sx={{ flexGrow: 1 }}>
         <Heading sx={{ fontSize: 3, fontWeight: 500, mx: 1 }}>{title}</Heading>

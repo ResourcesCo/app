@@ -54,9 +54,9 @@ const PageEditor = ({ name, folder, title, body }) => {
     },
   })
   return (
-    <Container sx={{ maxWidth: 768, p: 2, pt: 4, mx: 'auto' }}>
+    <Container sx={{ maxWidth: 768, px: 2, mx: 'auto', pb: 4 }}>
       <Title>{title || 'New Page'}</Title>
-      <Flex sx={{ mb: 3, alignItems: 'flex-end' }}>
+      <Flex sx={{ my: 2, alignItems: 'center' }}>
         <div sx={{ flexGrow: 1 }}>
           <Box>
             <Label sx={{ userSelect: 'none' }}>
@@ -97,7 +97,6 @@ const PageEditor = ({ name, folder, title, body }) => {
       <div sx={preview ? { display: 'none' } : {}}>
         <CodeEditor
           language="markdown"
-          theme="light"
           showLineNumbers={false}
           editorViewRef={editorViewRef}
           initialValue={body || ''}

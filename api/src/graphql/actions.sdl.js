@@ -5,8 +5,7 @@ export const schema = gql`
     path: String!
     type: String!
     body: String!
-    metadata: JSON!
-    computed: JSON!
+    data: JSON
     createdAt: DateTime!
     user: User!
     userId: String!
@@ -23,8 +22,7 @@ export const schema = gql`
     path: String!
     type: String!
     body: String!
-    metadata: JSON!
-    computed: JSON!
+    data: JSON
     userId: String!
     pageId: String!
   }
@@ -34,8 +32,7 @@ export const schema = gql`
     path: String
     type: String
     body: String
-    metadata: JSON
-    computed: JSON
+    data: JSON
     userId: String
     pageId: String
   }

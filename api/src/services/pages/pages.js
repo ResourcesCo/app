@@ -56,7 +56,6 @@ export const createPage = async (
   const pageProps = {
     title,
     body,
-    computed: {},
   }
 
   let name = slugify(title)
@@ -121,7 +120,6 @@ export const editPage = async (
   const pageProps = {
     title,
     body,
-    computed: {},
   }
 
   let page

@@ -5,8 +5,7 @@ export const schema = gql`
     folder: String!
     title: String!
     body: String!
-    meta: String!
-    computed: JSON!
+    data: JSON
     createdAt: DateTime!
     actions: [Action]!
   }

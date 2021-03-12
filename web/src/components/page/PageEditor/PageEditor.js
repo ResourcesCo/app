@@ -56,10 +56,10 @@ const PageEditor = ({ name, folder, title, body }) => {
   return (
     <Container sx={{ maxWidth: 768, p: 2, pt: 4, mx: 'auto' }}>
       <Title>{title || 'New Page'}</Title>
-      <Flex sx={{ mb: 3 }}>
+      <Flex sx={{ mb: 3, alignItems: 'flex-end' }}>
         <div sx={{ flexGrow: 1 }}>
           <Box>
-            <Label mb={3} sx={{ userSelect: 'none' }}>
+            <Label sx={{ userSelect: 'none' }}>
               <Checkbox
                 checked={preview}
                 onChange={({ target: { checked } }) => setPreview(checked)}

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Flex, IconButton, useThemeUI } from 'theme-ui'
 import { navigate, routes } from '@redwoodjs/router'
-import { BsFilePlus } from 'react-icons/bs'
+import { BsFillPlusSquareFill, BsFilePlus } from 'react-icons/bs'
 import { Menu, MenuItem } from '@szhsin/react-menu'
 
 const CreateMenu = () => {
@@ -15,7 +15,7 @@ const CreateMenu = () => {
     <Menu
       menuButton={
         <IconButton>
-          <BsFilePlus />
+          <BsFillPlusSquareFill />
         </IconButton>
       }
       styles={{ marginLeft: -10 }}

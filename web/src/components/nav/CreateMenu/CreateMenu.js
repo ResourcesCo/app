@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { jsx, Flex, IconButton, useThemeUI } from 'theme-ui'
 import { navigate, routes } from '@redwoodjs/router'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { BsHouse } from 'react-icons/bs'
+import { BsFilePlus } from 'react-icons/bs'
 import { Menu, MenuItem } from '@szhsin/react-menu'
 
-const AppMenu = () => {
+const CreateMenu = () => {
   const { theme } = useThemeUI()
   const menuItemStyles = {
     paddingLeft: 0,
@@ -16,19 +15,19 @@ const AppMenu = () => {
     <Menu
       menuButton={
         <IconButton>
-          <GiHamburgerMenu />
+          <BsFilePlus />
         </IconButton>
       }
-      styles={{ marginRight: -10 }}
+      styles={{ marginLeft: -10 }}
     >
-      <MenuItem onClick={() => navigate(routes.home())} styles={menuItemStyles}>
+      <MenuItem onClick={() => navigate(routes.new())} styles={menuItemStyles}>
         <Flex sx={{ alignItems: 'center', px: 3 }}>
-          <BsHouse sx={{ mr: 2 }} />
-          Home
+          <BsFilePlus sx={{ mr: 2 }} />
+          New Page
         </Flex>
       </MenuItem>
     </Menu>
   )
 }
 
-export default AppMenu
+export default CreateMenu

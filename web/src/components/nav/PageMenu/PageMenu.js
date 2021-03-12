@@ -1,23 +1,37 @@
 /** @jsx jsx */
-import { jsx, IconButton } from 'theme-ui'
-import { BsThreeDots } from 'react-icons/bs'
-import { Menu } from '@szhsin/react-menu'
+import { jsx, IconButton, Flex, useThemeUI } from 'theme-ui'
+import { navigate, routes } from '@redwoodjs/router'
+import { BsThreeDots, BsPencilSquare } from 'react-icons/bs'
+import { Menu, MenuItem } from '@szhsin/react-menu'
 
-const PageMenu = ({ pageMenuItems }) => {
+const PageMenu = ({ pageInfo: { route, path } }) => {
+  const { theme } = useThemeUI()
+  const menuItemStyles = {
+    paddingLeft: 0,
+    paddingRight: 0,
+    active: { backgroundColor: theme.colors.primary },
+  }
   return (
-    <>
-      {pageMenuItems && (
-        <Menu
-          menuButton={
-            <IconButton>
-              <BsThreeDots />
-            </IconButton>
-          }
+    <Menu
+      menuButton={
+        <IconButton>
+          <BsThreeDots />
+        </IconButton>
+      }
+      styles={{ marginLeft: -10 }}
+    >
+      {route === 'view' && (
+        <MenuItem
+          onClick={() => navigate(routes.edit({ path }))}
+          styles={menuItemStyles}
         >
-          {pageMenuItems}
-        </Menu>
+          <Flex sx={{ alignItems: 'center', px: 3 }}>
+            <BsPencilSquare sx={{ mr: 2 }} />
+            Edit
+          </Flex>
+        </MenuItem>
       )}
-    </>
+    </Menu>
   )
 }
 

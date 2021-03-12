@@ -26,12 +26,7 @@ export const Title = ({ children }) => {
   return null
 }
 
-const AppLayout = ({
-  initialTitle = 'Home',
-  pageMenuItems,
-  requireOnboarding = false,
-  children,
-}) => {
+const AppLayout = ({ initialTitle = 'Home', pageInfo = {}, children }) => {
   const [title, setTitle] = useState(initialTitle)
   const [nextPage, setNextPage] = useState()
   const [_colorMode, setColorMode] = useColorMode()
@@ -41,10 +36,7 @@ const AppLayout = ({
   return (
     <LayoutContext.Provider value={{ title, setTitle, nextPage, setNextPage }}>
       <Themed.root>
-        <NavBar
-          pageMenuItems={pageMenuItems}
-          requireOnboarding={requireOnboarding}
-        />
+        <NavBar pageInfo={pageInfo} />
         {children}
       </Themed.root>
     </LayoutContext.Provider>

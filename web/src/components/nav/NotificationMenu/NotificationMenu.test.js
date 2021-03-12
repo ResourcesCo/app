@@ -1,10 +1,10 @@
 import { render } from '@redwoodjs/testing'
-import AlertMenu from './AlertMenu'
+import NotificationMenu from './NotificationMenu'
 
-describe('AlertMenu', () => {
+describe('NotificationMenu', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AlertMenu />)
+      render(<NotificationMenu />)
     }).not.toThrow()
   })
 })

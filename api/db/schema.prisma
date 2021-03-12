@@ -31,8 +31,7 @@ model Page {
   folder    String         @default("")
   title     String
   body      String
-  meta      String         @default("")
-  computed  Json
+  data      Json
   createdAt DateTime       @default(now())
   locations PageLocation[]
   actions   Action[]

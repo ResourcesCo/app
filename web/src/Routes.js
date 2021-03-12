@@ -21,10 +21,10 @@ const Routes = () => {
   return (
     <Router paramTypes={userRouteParamTypes}>
       <Route path="/" page={HomePage} name="home" />
+      <Route path="/pages/new" page={NewPage} name="new" />
+      <Route path="/sign-up" page={SignUpPage} name="signUp" />
       <Route path="/{path:path}" page={ViewPage} name="view" />
       <Route path="/{path:path}/-/edit" page={EditPage} name="edit" />
-      <Route path="/-/new" page={NewPage} name="new" />
-      <Route path="/-/sign-up" page={SignUpPage} name="signUp" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )

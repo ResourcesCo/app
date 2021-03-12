@@ -9,7 +9,7 @@ const EditPage = ({ path }) => {
   const { isAuthenticated } = useAuth()
   const [name, folder] = splitPath(path)
   return (
-    <AppLayout requireOnboarding={true}>
+    <AppLayout pageInfo={{ requireOnboarding: true }}>
       {isAuthenticated && <EditCell name={name} folder={folder} />}
     </AppLayout>
   )

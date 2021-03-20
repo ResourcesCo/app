@@ -1,8 +1,9 @@
 export const standard = defineScenario({
   action: {
     one: {
+      title: 'String',
       name: 'String',
-      path: 'String',
+      folder: 'String',
       type: 'String',
       body: 'String',
       user: {
@@ -10,16 +11,18 @@ export const standard = defineScenario({
       },
       page: {
         create: {
+          title: 'String',
           name: 'String',
-          path: 'String401450',
+          folder: 'String401450',
           body: 'String',
         },
       },
     },
 
     two: {
+      title: 'String',
       name: 'String',
-      path: 'String',
+      folder: 'String',
       type: 'String',
       body: 'String',
       user: {
@@ -27,8 +30,9 @@ export const standard = defineScenario({
       },
       page: {
         create: {
+          title: 'String292288',
           name: 'String',
-          path: 'String292288',
+          folder: 'String',
           body: 'String',
         },
       },

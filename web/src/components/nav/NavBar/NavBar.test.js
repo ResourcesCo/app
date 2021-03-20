@@ -1,10 +1,20 @@
+/** @jsx jsx */
+import { jsx, ThemeProvider } from 'theme-ui'
 import { render } from '@redwoodjs/testing'
+import theme from 'src/theme'
+import AppLayout from 'src/layouts/AppLayout'
 import NavBar from './NavBar'
 
 describe('NavBar', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<NavBar />)
+      render(
+        <ThemeProvider theme={theme}>
+          <AppLayout>
+            <NavBar />
+          </AppLayout>
+        </ThemeProvider>
+      )
     }).not.toThrow()
   })
 })

@@ -5,7 +5,7 @@ import { BsThreeDots, BsPencilSquare } from 'react-icons/bs'
 import { Menu, MenuItem, FocusableItem } from '@szhsin/react-menu'
 import { useLayout } from 'src/layouts/AppLayout/AppLayout'
 
-const PageMenu = ({ pageInfo: { route, path } }) => {
+const PageMenu = ({ pageInfo: { route, path } = {} }) => {
   const {
     menuStyles,
     colorMode,

@@ -1,13 +1,15 @@
 export const standard = defineScenario({
   page: {
     one: {
+      title: 'Hello',
       name: 'String',
-      path: 'String4658296',
+      folder: 'String4658296',
       body: 'String',
     },
     two: {
-      name: 'String',
-      path: 'String5825802',
+      title: 'Hello',
+      name: 'string',
+      folder: '',
       body: 'String',
     },
   },

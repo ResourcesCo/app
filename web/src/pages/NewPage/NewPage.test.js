@@ -9,7 +9,7 @@ describe('NewPage', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <ThemeProvider them={theme}>
+        <ThemeProvider theme={theme}>
           <NewPage />
         </ThemeProvider>
       )

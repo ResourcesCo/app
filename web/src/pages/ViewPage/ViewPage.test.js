@@ -2,7 +2,6 @@
 import { jsx, ThemeProvider } from 'theme-ui'
 import { render } from '@redwoodjs/testing'
 import theme from 'src/theme'
-
 import ViewPage from './ViewPage'
 
 describe('ViewPage', () => {
@@ -10,7 +9,7 @@ describe('ViewPage', () => {
     expect(() => {
       render(
         <ThemeProvider theme={theme}>
-          <ViewPage />
+          <ViewPage path="/" />
         </ThemeProvider>
       )
     }).not.toThrow()

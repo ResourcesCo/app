@@ -10,7 +10,7 @@ describe('EditPage', () => {
     expect(() => {
       render(
         <ThemeProvider theme={theme}>
-          <EditPage />
+          <EditPage path="/" />
         </ThemeProvider>
       )
     }).not.toThrow()

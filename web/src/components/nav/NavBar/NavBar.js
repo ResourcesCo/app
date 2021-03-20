@@ -9,7 +9,7 @@ import CreateMenu from '../CreateMenu'
 import AvatarMenu from '../AvatarMenu'
 import PageMenu from '../PageMenu'
 
-const NavBar = ({ pageInfo }) => {
+const NavBar = ({ pageInfo = {} }) => {
   const { title } = useLayout()
   useEffect(() => {
     if (typeof window !== undefined && typeof title === 'string') {
